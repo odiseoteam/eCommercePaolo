@@ -4,7 +4,8 @@ include_once 'datos_conexion.php';
 
 if($_POST){
 
-    $conexion = mysqli_connect($server, $user, $pass, $dataBase)
+    $conexion = mysqli_connect($data_connect['DB_HOST'], $data_connect['DB_USER'],
+                    $data_connect['DB_PASS'], $data_connect['DB_NAME'])
     or die("Problemas con la conexión");
 
     //$uploads_dir = '/images/Products';

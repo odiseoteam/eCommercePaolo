@@ -47,7 +47,8 @@ $src_images = "images\\Products\\";
 <!-- Producto -->
 <div id="contenedor-principal" class="container pt-5 mt-5 mb-2">
 <?php
-$conexion = mysqli_connect($server, $user, $pass, $dataBase)
+$conexion = mysqli_connect($data_connect['DB_HOST'], $data_connect['DB_USER'],
+    $data_connect['DB_PASS'], $data_connect['DB_NAME'])
     or die("Problemas con la conexión");
 $resultadoProducto = mysqli_query($conexion, "SELECT name, price, imagen, description FROM app_product where id = $_GET[id]")
     or die("Problemas en el select:" . mysqli_error($conexion));

@@ -81,11 +81,12 @@ $src_images = "images\\Products\\";
     echo '        <div class="col-lg-6">';
     echo '            <ul class="list-group">';
     if($cart_products > 0) {
-        $conexion = mysqli_connect($server, $user, $pass, $dataBase)
+        $conexion = mysqli_connect($data_connect['DB_HOST'], $data_connect['DB_USER'],
+            $data_connect['DB_PASS'], $data_connect['DB_NAME'])
         or die("Problemas con la conexión");
 
         $productos = mysqli_query($conexion,
-            "SELECT name, price, imagen FROM app_product  where id in (" . $cart_products . ")")
+            "SELECT name, price, imagen FROM app_product where id in (" . $cart_products . ")")
         or die("Problemas en el select" . mysqli_error($conexion));
 
         while ($producto = mysqli_fetch_array($productos)) {

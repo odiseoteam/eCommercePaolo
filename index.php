@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 $_SESSION = array();
 session_unset();
-session_destroy();
+//session_destroy();
 /*
 if (ini_get("session.use_cookies"))
 {
@@ -123,7 +123,8 @@ $src_images = "images\\Products\\";
 						<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 							<?php
                                 //var_dump(session_id());
-								$conexion = mysqli_connect($server, $user, $pass, $dataBase)
+								$conexion = mysqli_connect($data_connect['DB_HOST'], $data_connect['DB_USER'],
+                                    $data_connect['DB_PASS'], $data_connect['DB_NAME'])
 									or die("Problemas con la conexión");
 
 								$productos = mysqli_query($conexion, "SELECT id, name, price, imagen from app_product")
