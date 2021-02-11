@@ -1,3 +1,27 @@
+<?php
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(E_ALL);
+
+$_SESSION = array();
+session_unset();
+session_destroy();
+/*
+if (ini_get("session.use_cookies"))
+{
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]);
+}*/
+
+session_start();
+
+include_once 'datos_conexion.php';
+
+$src_images = "images\\Products\\";
+?>
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -20,6 +44,13 @@
 				
 				<div class="collapse navbar-collapse justify-content-end" id="navbar">
 					<ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a type="button" class="btn btn-secondary" href="cart_list_products.php">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                </svg>
+                            </a>
+                        </li>
 						<li class="nav-item">
 							<a class="nav-link active" href="#">Home</a>
 						</li>
@@ -45,7 +76,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<ul class="nav justify-content-center">
-								<li class="nav-item"><a href="#" class="nav-link">Category 1</a></li>
+								<li class="nav-item"><a href="add_products.php" class="nav-link">Agregar Productos</a></li>
 								<li class="nav-item"><a href="#" class="nav-link">Category 2</a></li>
 								<li class="nav-item"><a href="#" class="nav-link">Category 3</a></li>
 								<li class="nav-item"><a href="#" class="nav-link">Category 4</a></li>
@@ -54,7 +85,7 @@
 					</div>
 				</div>
 				<!-- /Categorias -->
-				
+
 				<!-- Carousel -->
 				<section id="carousel">
 					<div id="carousel-bs" class="carousel slide" data-bs-ride="carousel">
@@ -90,72 +121,29 @@
 				<Section id="listado-productos" class="mt-4 mb-4">
 					<div class="container">
 						<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-						  <div class="col">
-							<div class="card">
-							  <img src="images\Products\martillo.jpg" class="card-img-top" alt="...">
-							  <div class="card-body">
-								<h5 class="card-title"><a href="#">Martillito</a></h5>
-								<h5 id="price">$100.00</h5>
-								<button class="btn btn-primary btn-sm" type="submit">Add to cart</button>
-								<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							  </div>
-							</div>
-						  </div>
-						  <div class="col">
-							<div class="card">
-							  <img src="images\Products\cerveza.jpg" class="card-img-top" alt="...">
-							  <div class="card-body">
-								<h5 class="card-title"><a href="#">Birra</a></h5>
-								<h5 id="price">$55.00</h5>
-								<button class="btn btn-primary btn-sm" type="submit">Add to cart</button>
-								<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							  </div>
-							</div>
-						  </div>
-						  <div class="col">
-							<div class="card">
-							  <img src="images\Products\revolver.jpg" class="card-img-top" alt="...">
-							  <div class="card-body">
-								<h5 class="card-title"><a href="#">Sledge Hammer</a></h5>
-								<h5 id="price">$999.99</h5>
-								<button class="btn btn-primary btn-sm" type="submit">Add to cart</button>
-								<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-							  </div>
-							</div>
-						  </div>
-						  <div class="col">
-							<div class="card">
-							  <img src="images\Products\vino.jpg" class="card-img-top" alt="...">
-							  <div class="card-body">
-								<h5 class="card-title"><a href="#">Vinasi</a></h5>
-								<h5 id="price">$500.00</h5>
-								<button class="btn btn-primary btn-sm" type="submit">Add to cart</button>
-								<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-							  </div>
-							</div>
-						  </div>
-						  <div class="col">
-							<div class="card">
-							  <img src="images\Products\dami.jpg" class="card-img-top" alt="...">
-							  <div class="card-body">
-								<h5 class="card-title"><a href="#">Un Dami</a></h5>
-								<h5 id="price">$0.50</h5>
-								<button class="btn btn-primary btn-sm" type="submit">Add to cart</button>
-								<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-							  </div>
-							</div>
-						  </div>
-						  <div class="col">
-							<div class="card">
-							  <img src="images\Products\porotos.jpg" class="card-img-top" alt="...">
-							  <div class="card-body">
-								<h5 class="card-title"><a href="#">Porotos</a></h5>
-								<h5 id="price">$95.00</h5>
-								<button class="btn btn-primary btn-sm" type="submit">Add to cart</button>
-								<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-							  </div>
-							</div>
-						  </div>					  
+							<?php
+                                //var_dump(session_id());
+								$conexion = mysqli_connect($server, $user, $pass, $dataBase)
+									or die("Problemas con la conexión");
+
+								$productos = mysqli_query($conexion, "SELECT id, name, price, imagen from app_product")
+									or die("Problemas en el select:" . mysqli_error($conexion));
+
+								while ($producto = mysqli_fetch_array($productos)) {
+									echo ' <div class="col">';
+									echo '    <div class="card">';
+									echo '      <img src="'. $src_images . $producto['imagen'] .'" class="card-img-top" alt="...">';
+									echo '      <div class="card-body">';
+									echo '        <h5 class="card-title"><a href="product.php?id='. $producto['id'] .'">'. $producto['name'] . '</a></h5>';
+									echo '        <h5 id="price"> $' . number_format($producto['price'] / 100,2) . '</h5>';
+									echo '        <a class="btn btn-primary btn-sm" href="add_cart.php?id=' . $producto['id'] . '">Add to cart</a>';
+									echo '        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>';
+									echo '      </div>';
+									echo '    </div>';
+									echo '</div>';
+								}
+								mysqli_close($conexion);
+							?>
 						</div>
 					</div>
 				</Section>
