@@ -127,7 +127,7 @@ $src_images = "images\\Products\\";
                                     $data_connect['DB_PASS'], $data_connect['DB_NAME'])
 									or die("Problemas con la conexión");
 
-								$productos = mysqli_query($conexion, "SELECT id, name, price, imagen from app_product")
+								$productos = mysqli_query($conexion, "SELECT id, name, price, imagen FROM app_product")
 									or die("Problemas en el select:" . mysqli_error($conexion));
 
 								while ($producto = mysqli_fetch_array($productos)) {

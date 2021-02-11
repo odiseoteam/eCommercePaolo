@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <?php
+if ($_SERVER['PHP_AUTH_USER'] <> 'pepe' && $_SERVER['PHP_AUTH_PW'] <> 'tito') {
+    header('WWW-Authenticate: Basic realm="Ingresar usuario y contraseña"');
+    header('HTTP/1.0 401 Unauthorized');
+    echo 'Contraseña incorrecta';
+    exit;
+}
+
+
 include_once 'datos_conexion.php';
 
 if($_POST){

@@ -86,7 +86,7 @@ $src_images = "images\\Products\\";
         or die("Problemas con la conexión");
 
         $productos = mysqli_query($conexion,
-            "SELECT name, price, imagen FROM app_product where id in (" . $cart_products . ")")
+            "SELECT name, price, imagen FROM app_product WHERE id IN (" . $cart_products . ")")
         or die("Problemas en el select" . mysqli_error($conexion));
 
         while ($producto = mysqli_fetch_array($productos)) {

@@ -20,14 +20,3 @@ $_SESSION['cart'][$cant_productos] = $_GET['id'];
 $cant_productos++;
 
 header("location: index.php");
-/*
-for($i=0; $i < $cant_productos; $i++){
-    echo $_SESSION['cart'][$i];
-}
-*/
-
-
-
-
-
-

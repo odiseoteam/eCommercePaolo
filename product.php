@@ -50,7 +50,7 @@ $src_images = "images\\Products\\";
 $conexion = mysqli_connect($data_connect['DB_HOST'], $data_connect['DB_USER'],
     $data_connect['DB_PASS'], $data_connect['DB_NAME'])
     or die("Problemas con la conexión");
-$resultadoProducto = mysqli_query($conexion, "SELECT name, price, imagen, description FROM app_product where id = $_GET[id]")
+$resultadoProducto = mysqli_query($conexion, "SELECT name, price, imagen, description FROM app_product WHERE id = $_GET[id]")
     or die("Problemas en el select:" . mysqli_error($conexion));
 
 $producto = mysqli_fetch_array($resultadoProducto);
