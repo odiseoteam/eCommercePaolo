@@ -1,0 +1,22 @@
+{% extends "layout.html.twig" %}
+
+{% block head_title %}
+    {{ head_title }}
+{% endblock %}
+
+{% block page_title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block content %}
+<div id="contenedor-principal" class="container pt-5 mt-5 mb-2">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6 shadow p-3 mb-5 bg-primary rounded text-white">
+            <h1>{{ producto.name }}</h1>
+            <img src="{{ src_images_products ~ producto.imagen }}" class="card-img-top" alt="...">
+            <h3>Precio: {{ producto.price }}</h3>
+            <h3>Descripcion: {{ producto.description }}</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}

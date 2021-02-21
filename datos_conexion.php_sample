@@ -1,5 +1,0 @@
-<?php
-$data_connect['DB_HOST']='server';
-$data_connect['DB_NAME']='name';
-$data_connect['DB_USER']='user';
-$data_connect['DB_PASS']='password';

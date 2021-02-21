@@ -1,0 +1,40 @@
+{% extends "layout.html.twig" %}
+
+{% block head_title %}
+    {{ head_title }}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <style type="text/css">
+        img {object-fit: contain;
+            float: left;
+            width: 5%;
+            height: 5%;
+        }
+    </style>
+{% endblock %}
+
+
+{% block page_title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block content %}
+<div id="contenedor-principal" class="container pt-5 mt-5 mb-2">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6">
+            <ul class="list-group">
+            {% for producto in productos %}
+                <li class="list-group-item">
+                    <img src="{{ src_images_products ~ producto.imagen }}" class="img-fluid" alt="...">
+                    <div>{{ producto.name }} Precio: {{ producto.price }}</div>
+                </li>
+            {% else %}
+                <li class="list-group-item">No hay productos cargados en el carrito</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
