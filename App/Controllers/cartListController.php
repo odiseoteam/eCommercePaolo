@@ -1,26 +1,33 @@
 <?php
+
 namespace App\Controllers;
+
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
+use Twig\Environment;
 
 class cartListController
 {
+    /** @var EntityManager */
     private $entityManager;
 
-    public function __construct(EntityManager $entityManager){
+    /** @var Environment */
+    private $templateEngine;
+
+    public function __construct(
+        EntityManager $entityManager,
+        Environment $templateEngine
+    )
+    {
         $this->entityManager = $entityManager;
+        $this->templateEngine = $templateEngine;
     }
 
-    public function action(){
+    public function action()
+    {
         $head_title = "Paolo's Commerce - PRODUCTOS AGREGADOS AL CARRITO";
         $page_title = $head_title;
         $src_images_products = "/images/Products/";
-
-        $loader = new \Twig\Loader\FilesystemLoader('../views');
-        $this->templateEngine = new \Twig\Environment($loader, [
-            'debug' => true,
-            'cache' => false
-        ]);
 
         $productos = null;
 

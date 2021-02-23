@@ -1,27 +1,40 @@
 <?php
+
 namespace App\Controllers;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
 use App\Entities\AppProduct;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
 
 class addProductsController
 {
+    /** @var EntityManager */
     private $entityManager;
 
-    public function __construct(EntityManager $entityManager){
+    /** @var UrlGeneratorInterface $urlGenerator */
+    private $urlGenerator;
+
+    /** @var Environment */
+    private $templateEngine;
+
+    public function __construct(
+        EntityManager $entityManager,
+        UrlGeneratorInterface $urlGenerator,
+        Environment $templateEngine
+    )
+    {
         $this->entityManager = $entityManager;
+        $this->urlGenerator = $urlGenerator;
+        $this->templateEngine = $templateEngine;
     }
 
-    public function action(Request $request){
+    public function action(Request $request)
+    {
         $head_title = 'Alta de Productos';
         $page_title = "Paolo's Commerce - ALTA DE PRODUCTO";
-
-        $loader = new \Twig\Loader\FilesystemLoader('../views');
-        $this->templateEngine = new \Twig\Environment($loader, [
-            'debug' => true,
-            'cache' => false
-        ]);
 
         if ($_SERVER['PHP_AUTH_USER'] <> 'pepe' && $_SERVER['PHP_AUTH_PW'] <> 'tito') {
             header('WWW-Authenticate: Basic realm="Ingresar usuario y contraseña"');
@@ -30,11 +43,11 @@ class addProductsController
             exit;
         }
 
-        if($_POST){
+        if($_POST) {
             $uploads_dir = '../web/images/Products/';
             $name_image = null;
 
-            if ($_FILES){
+            if ($_FILES) {
                 $tmp_name = $_FILES['imagen']['tmp_name'];
                 $name_image = basename($_FILES['imagen']['name']);
                 move_uploaded_file($tmp_name, $uploads_dir . $name_image);
@@ -58,7 +71,8 @@ class addProductsController
         $response = new Response($this->templateEngine->render('add_products.html.twig', [
             'inserto' => $insert,
             'head_title' => $head_title,
-            'page_title' => $page_title
+            'page_title' => $page_title,
+            'url_generator' => $this->urlGenerator,
         ]));
 
         return $response;

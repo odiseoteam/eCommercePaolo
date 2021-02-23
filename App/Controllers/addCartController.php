@@ -1,10 +1,22 @@
 <?php
+
 namespace App\Controllers;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class addCartController
 {
-    public function action(){
+    /** @var UrlGeneratorInterface */
+    private $urlGenerator;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator)
+    {
+        $this->urlGenerator = $urlGenerator;
+    }
+
+    public function action(Request $request)
+    {
         if(!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array();
         }
@@ -13,11 +25,8 @@ class addCartController
 
         //echo "cantidad: " . $cant_productos . "  ";
 
-        $_SESSION['cart'][$cant_productos] = $_GET['id'];
+        $_SESSION['cart'][$cant_productos] = $request->get('id');
 
-        $response = new RedirectResponse('http://dev.paolo-ecommerce.com/front.php');
-
-        return $response;
+        return new RedirectResponse($this->urlGenerator->generate('index'));
     }
-
 }

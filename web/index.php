@@ -15,33 +15,42 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Twig\Environment as TwigEnvironment;
+use Twig\Loader\FilesystemLoader;
 
 $request = Request::createFromGlobals();
+$context = new RequestContext();
+$context->fromRequest($request);
 $routes = new RouteCollection();
+$urlGenerator = new UrlGenerator($routes, $context);
+$loader = new FilesystemLoader('../views');
+$templateEngine = new TwigEnvironment($loader, [
+    'debug' => true,
+    'cache' => false
+]);
 
 $routes->add('index', new Route('/', [
-    '_controller' => [new App\Controllers\indexController($entityManager), 'action']
+    '_controller' => [new App\Controllers\indexController($entityManager, $urlGenerator, $templateEngine), 'action']
 ]));
 
 $routes->add('add_products', new Route('/add_products', [
-    '_controller' => [new App\Controllers\addProductsController($entityManager), 'action']
+    '_controller' => [new App\Controllers\addProductsController($entityManager, $urlGenerator, $templateEngine), 'action']
 ]));
 
-$routes->add('add_cart', new Route('/add_cart', [
-    '_controller' => [new App\Controllers\addCartController(), 'action']
+$routes->add('add_cart', new Route('/add_cart/{id}', [
+    '_controller' => [new App\Controllers\addCartController($urlGenerator), 'action']
 ]));
 
 $routes->add('cart_list', new Route('/cart_list', [
-    '_controller' => [new App\Controllers\cartListController($entityManager), 'action']
+    '_controller' => [new App\Controllers\cartListController($entityManager, $templateEngine), 'action']
 ]));
 
 $routes->add('product', new Route('/product/{id}', [
     'id' => null,
-    '_controller' => [new App\Controllers\productController($entityManager), 'action']
+    '_controller' => [new App\Controllers\productController($entityManager,$templateEngine), 'action']
 ]));
 
-$context = new RequestContext();
-$context->fromRequest($request);
 $matcher = new UrlMatcher($routes, $context);
 
 $controllerResolver = new ControllerResolver();
